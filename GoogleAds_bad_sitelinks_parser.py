@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
+# The script extracts sitelinks from  ad extensions and checks their status: 200, 301, 404 etc...
 
 
 import sys
@@ -25,7 +22,7 @@ adwords_client = adwords.AdWordsClient.LoadFromStorage('googleads.yaml') #the fi
 report_downloader = adwords_client.GetReportDownloader(version='v201809')
 
 report_query = (adwords.ReportQueryBuilder()
-                .Select('AccountDescriptiveName', 'CampaignName', 'AttributeValues')
+                .Select('AccountDescriptiveName', 'CampaignName', 'AttributeValues')  # array AttributeValues  contains sitelinks
                 # .Select('AdGroupName')
                 .From('PLACEHOLDER_FEED_ITEM_REPORT')
                 .Where('Status').In('ENABLED')
@@ -51,6 +48,8 @@ df1 = pd.read_csv(output)
 # df1
 
 df1.columns = ['Account', 'Campaign', 'Exten']
+
+#getting sitelinks from the column "Exten"
 df1['raw_Link'] = [re.search("(?P<url>https?://[^\s]+)", n) for n in df1['Exten']]
 df1_without_none = df1[df1['Exten'].str.contains('http', regex=True, na=False)]
 # df1_without_none.head()
