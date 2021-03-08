@@ -1,4 +1,4 @@
-# Python scripts for working with Google Ads API 
+# Python scripts to work with Google Ads API 
 
 To get access to the Google Ads reports via API you need to create a yaml file with four arguments:  developer_token,  client_id, client_secret  and refresh_token (also you can add here the client_customer_id, but I prefer add it in the main python file)
 
